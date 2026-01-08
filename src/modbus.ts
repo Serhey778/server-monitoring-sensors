@@ -1,6 +1,6 @@
 import ModbusRTU from 'modbus-serial';
 import { writtenMonitoringDB } from './db.ts';
-import { socketServer } from '../index.ts';
+import { io } from './index.ts';
 
 // Функция для опроса датчиков
 export async function readSensors(): Promise<Response | void> {
@@ -19,9 +19,9 @@ export async function readSensors(): Promise<Response | void> {
     const humidData = await humidSensor.readHoldingRegisters(0, 10);
 
     // Сохранение в БД
-    await writtenMonitoringDB(-7, 100);
+    await writtenMonitoringDB(tempData.data, humidData.data);
     // Отправляем данные клиентам через WebSocket
-    socketServer.emit('sensorsData', {
+    io.emit('sensorsData', {
       tempData: tempData.data,
       humidData: humidData.data,
     });

@@ -45,10 +45,11 @@ export async function writtenMonitoringDB(
   temp: number[],
   humid: number[]
 ): Promise<void> {
+  const date = new Date().toISOString();
   try {
     sql`
-      INSERT INTO monitoring (temp, humid)
-        VALUES (${temp}, ${humid})
+      INSERT INTO monitoring (temp, humid, created_at)
+        VALUES (${temp}, ${humid}, ${date})
         ON CONFLICT (id) DO NOTHING;
     `;
     console.log('Data was written to the database successfully');

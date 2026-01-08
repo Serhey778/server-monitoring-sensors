@@ -17,7 +17,8 @@
     "express": "^5.2.1",
     "modbus-serial": "^8.0.23",
     "postgres": "^3.4.8",
-    "socket.io": "^4.8.3"
+    "socket.io": "^4.8.3",
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "nodemon": "^3.1.11",

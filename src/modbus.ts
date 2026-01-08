@@ -1,6 +1,5 @@
 import ModbusRTU from 'modbus-serial';
-import { writtenMonitoringDB } from './db.ts';
-import { io } from './index.ts';
+import { validatedData } from './validated.ts';
 
 // Функция для опроса датчиков
 export async function readSensors(): Promise<Response | void> {
@@ -18,13 +17,8 @@ export async function readSensors(): Promise<Response | void> {
     // Читаем 10 регистров с датчика 2
     const humidData = await humidSensor.readHoldingRegisters(0, 10);
 
-    // Сохранение в БД
-    await writtenMonitoringDB(tempData.data, humidData.data);
-    // Отправляем данные клиентам через WebSocket
-    io.emit('sensorsData', {
-      tempData: tempData.data,
-      humidData: humidData.data,
-    });
+    // Валидация, сохранение в БД и отправляем данные клиентам через WebSocket
+    await validatedData(tempData.data, humidData.data);
   } catch (error) {
     return Response.json(
       { message: `Error reading data from the sensor: ${error}` },

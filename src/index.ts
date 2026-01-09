@@ -5,8 +5,8 @@ import { Server as SocketIOServer } from 'socket.io';
 import { createMonitoringDB } from './db.ts';
 import { readSensors } from './read-sensors.ts';
 import { router } from './routes.ts';
-import { READING_PERIOD } from './utils/const.ts';
 
+const READING_PERIOD = 5000;
 const PORT = 5000;
 const app = express();
 const server = http.createServer(app);

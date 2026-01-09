@@ -55,7 +55,6 @@ export async function writtenMonitoringDB(
         VALUES (${temp}, ${humid}, ${date})
         ON CONFLICT (id) DO NOTHING
     `;
-    console.log('Data was written to the database successfully');
   } catch (error) {
     console.error('Error written the database:', error);
   }
@@ -102,13 +101,13 @@ export async function get24HoursInDataDB(): Promise<DataDB[] | void> {
 }
 
 export async function getDateByDataDB(
-  dateURL: string
+  segmentURL: string
 ): Promise<DataDB[] | void> {
   try {
     const data: DataDB[] = await sql`
      SELECT *
      FROM monitoring
-     WHERE DATE(created_at) = ${dateURL};
+     WHERE DATE(created_at) = ${segmentURL};
     `;
     return data;
   } catch (error) {

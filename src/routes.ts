@@ -17,4 +17,4 @@ router.get('/6hours', (req, res) => getData(req, res, get6HoursInDataDB));
 router.get('/24hours', (req, res) => getData(req, res, get24HoursInDataDB));
 
 // transfer data by date
-router.get('/nome/:date', getDateByData);
+router.get('/:date', getDateByData);

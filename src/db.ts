@@ -6,20 +6,22 @@ const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 export async function createMonitoringDB(): Promise<void> {
   try {
+    //включаем расширение
     sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
-    // Удаляем таблицу, если существует
-    // sql`DROP TABLE IF EXISTS monitoring`;
+    // Удаляем таблицу в б/д, если существует
+    sql`DROP TABLE IF EXISTS monitoring`;
 
+    //создаем новую таблицу в б/д
     sql`
       CREATE TABLE IF NOT EXISTS monitoring (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        temp INT[] NOT NULL, 
-        humid INT[] NOT NULL,
+        temp INT NOT NULL, 
+        humid INT NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `;
-    // создание функции
+    // функция которая удаляет строки в таблице б/д, которые созданы более 30 дней назад
     sql`
      CREATE OR REPLACE FUNCTION delete_old_records() RETURNS TRIGGER AS $$
       BEGIN
@@ -29,7 +31,7 @@ export async function createMonitoringDB(): Promise<void> {
       $$ LANGUAGE plpgsql;
     `;
 
-    //Создание триггера
+    //триггера, который при каждой записи в б/д, вызывает вышеуказанную функцию для каждой строки таблицы
     sql`
      CREATE TRIGGER delete_old_records_trigger
       BEFORE INSERT ON monitoring
@@ -42,10 +44,11 @@ export async function createMonitoringDB(): Promise<void> {
 }
 
 export async function writtenMonitoringDB(
-  temp: number[],
-  humid: number[]
+  temp: number,
+  humid: number
 ): Promise<void> {
   const date = new Date().toISOString();
+  console.log(date);
   try {
     sql`
       INSERT INTO monitoring (temp, humid, created_at)

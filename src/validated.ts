@@ -4,14 +4,14 @@ import { io } from './index.ts';
 
 const DataDBSchema = z.object({
   id: z.string(), // id должен быть строкой
-  temp: z.array(z.number()), // temp должен быть массивом чисел
-  humid: z.array(z.number()), // humid должен быть массивом чисел
+  temp: z.number(), // temp должен быть массивом чисел
+  humid: z.number(), // humid должен быть массивом чисел
   created_at: z.string(), // created_at должен быть строкой
 });
 
 const schema = DataDBSchema.omit({ id: true, created_at: true });
 
-export async function validatedData(temp: number[], humid: number[]) {
+export async function validatedData(temp: number, humid: number) {
   const validated = schema.safeParse({
     temp,
     humid,

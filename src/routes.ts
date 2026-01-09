@@ -1,21 +1,21 @@
 import express from 'express';
+import { getData, getDateByData } from './controller.ts';
 import {
-  get1HourInData,
-  get6HoursInData,
-  get24HoursInData,
-  getDateByData,
-} from './controller.ts';
+  get1HourInDataDB,
+  get6HoursInDataDB,
+  get24HoursInDataDB,
+  getDateByDataDB,
+} from './db.ts';
 
 export const router = express.Router();
-
 // transfer data in an 1 hour
-router.get('/1hour', get1HourInData);
+router.get('/1hour', (req, res) => getData(req, res, get1HourInDataDB));
 
 // transfer data in an 6 hourы
-router.get('/6hours', get6HoursInData);
+router.get('/6hours', (req, res) => getData(req, res, get6HoursInDataDB));
 
 // transfer data in an 24 hours
-router.get('/24hours', get24HoursInData);
+router.get('/24hours', (req, res) => getData(req, res, get24HoursInDataDB));
 
 // transfer data by date
 router.get('/:date', getDateByData);

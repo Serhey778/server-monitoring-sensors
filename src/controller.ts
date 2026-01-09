@@ -23,7 +23,6 @@ export async function getDateByData(
 ): Promise<Response | void> {
   try {
     const segmentURL = req.params.date;
-    console.log(segmentURL);
     const data = await getDateByDataDB(segmentURL);
     if (!data || data.length === 0)
       return res.status(404).json({ message: 'Data not found' });

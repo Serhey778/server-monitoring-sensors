@@ -1,28 +1,29 @@
 import postgres from 'postgres';
-
+import dotenv from 'dotenv';
 import type { DataDB } from './type.ts';
 
+dotenv.config();
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 export async function createMonitoringDB(): Promise<void> {
   try {
     //включаем расширение
-    sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+    await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
     // Удаляем таблицу в б/д, если существует
-    sql`DROP TABLE IF EXISTS monitoring`;
+    await sql`DROP TABLE IF EXISTS monitoring`;
 
     //создаем новую таблицу в б/д
-    sql`
+    await sql`
       CREATE TABLE IF NOT EXISTS monitoring (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        temp INT NOT NULL, 
-        humid INT NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        temp REAL NOT NULL, 
+        humid REAL NOT NULL,
+        created_at TIMESTAMP NOT NULL DEFAULT NOW()
       )
     `;
     // функция которая удаляет строки в таблице б/д, которые созданы более 30 дней назад
-    sql`
+    await sql`
      CREATE OR REPLACE FUNCTION delete_old_records() RETURNS TRIGGER AS $$
       BEGIN
 	    DELETE FROM monitoring WHERE created_at < NOW() - INTERVAL '30 days';
@@ -32,7 +33,7 @@ export async function createMonitoringDB(): Promise<void> {
     `;
 
     //триггера, который при каждой записи в б/д, вызывает вышеуказанную функцию для каждой строки таблицы
-    sql`
+    await sql`
      CREATE TRIGGER delete_old_records_trigger
       BEFORE INSERT ON monitoring
       FOR EACH ROW EXECUTE FUNCTION delete_old_records();
@@ -47,13 +48,12 @@ export async function writtenMonitoringDB(
   temp: number,
   humid: number
 ): Promise<void> {
-  const date = new Date().toISOString();
-  console.log(date);
+  const date = new Date();
   try {
-    sql`
+    await sql`
       INSERT INTO monitoring (temp, humid, created_at)
         VALUES (${temp}, ${humid}, ${date})
-        ON CONFLICT (id) DO NOTHING;
+        ON CONFLICT (id) DO NOTHING
     `;
     console.log('Data was written to the database successfully');
   } catch (error) {
@@ -63,8 +63,7 @@ export async function writtenMonitoringDB(
 
 export async function get1HourInDataDB(): Promise<DataDB[] | void> {
   try {
-    const data: DataDB[] = await sql`
-    SELECT *
+    const data = await sql<DataDB[]>`SELECT * 
     FROM monitoring
     WHERE created_at >= NOW() - INTERVAL '1 hour';
     `;

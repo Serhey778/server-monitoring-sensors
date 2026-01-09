@@ -8,7 +8,9 @@ export async function getData(
   getDataDB: () => Promise<DataDB[] | void>
 ): Promise<Response | void> {
   try {
+    console.log('start');
     const data = await getDataDB();
+    console.log(data);
     if (!data || data.length === 0)
       return res.status(404).json({ message: 'Data not found' });
     res.status(200).json(data);

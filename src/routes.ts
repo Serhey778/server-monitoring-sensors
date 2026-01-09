@@ -4,7 +4,6 @@ import {
   get1HourInDataDB,
   get6HoursInDataDB,
   get24HoursInDataDB,
-  getDateByDataDB,
 } from './db.ts';
 
 export const router = express.Router();
@@ -18,4 +17,4 @@ router.get('/6hours', (req, res) => getData(req, res, get6HoursInDataDB));
 router.get('/24hours', (req, res) => getData(req, res, get24HoursInDataDB));
 
 // transfer data by date
-router.get('/:date', getDateByData);
+router.get('/nome/:date', getDateByData);

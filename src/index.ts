@@ -23,7 +23,7 @@ export const io = new SocketIOServer(httpServer, {
 
 //создаем базу данных
 await createMonitoringDB();
-//читываем значение датчиков через каждые 5 сек и после валидации записываем их в БД
+//читываем значение датчиков через каждые 1 сек и после валидации записываем их в БД
 setInterval(readSensors, READING_PERIOD);
 
 // Устанавливаем соединение WebSocket c клиентом

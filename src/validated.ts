@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { writtenMonitoringDB } from './db.ts';
+import { writtenMonitoringDB } from './database.ts';
 import { io } from './index.ts';
 
 const DataDBSchema = z.object({

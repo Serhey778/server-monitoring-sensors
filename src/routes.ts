@@ -4,7 +4,7 @@ import {
   get1HourInDataDB,
   get6HoursInDataDB,
   get24HoursInDataDB,
-} from './db.ts';
+} from './database.ts';
 
 export const router = express.Router();
 // transfer data in an 1 hour

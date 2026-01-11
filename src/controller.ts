@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 import type { DataDB } from './type.ts';
-import { getDateByDataDB } from './db.ts';
+import { getDateByDataDB } from './database.ts';
 
 export async function getData(
   req: Request,

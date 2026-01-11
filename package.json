@@ -5,10 +5,10 @@
   "license": "ISC",
   "author": "",
   "type": "module",
-  "main": "index.ts",
+  "main": "index.js",
   "scripts": {
-    "start": "node src/index.ts",
-    "dev": "nodemon src/index.ts"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "dependencies": {
     "@types/cors": "^2.8.19",

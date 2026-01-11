@@ -25,7 +25,7 @@ export async function readSensors(): Promise<Response | void> {
     const temp = parseValue(tempValue.data);
     // переводит показания датчика влажности в проценты
     const humid = parseValue(humidValue.data);
-    // Валидация, сохранение в БД и отправляем данные клиенту через WebSocket
+    // проводим валидацию показаний датчиков и сохраняем их в БД
     await validatedData(temp, humid);
   } catch (error) {
     return Response.json(

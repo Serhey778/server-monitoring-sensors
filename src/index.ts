@@ -5,18 +5,50 @@ import { Server as SocketIOServer } from 'socket.io';
 import { createMonitoringDB } from './db.ts';
 import { readSensors } from './read-sensors.ts';
 import { router } from './routes.ts';
+import { getLastDataDB } from './db.ts';
 
 const READING_PERIOD = 5000;
 const PORT = 5000;
 const app = express();
-const server = http.createServer(app);
-export const io = new SocketIOServer(server);
 app.use(cors());
 app.use(express.json());
-await createMonitoringDB();
-setInterval(readSensors, READING_PERIOD);
 app.use('/api/', router);
 
-app.listen(PORT, () => {
+const httpServer = http.createServer(app);
+export const io = new SocketIOServer(httpServer, {
+  cors: {
+    origin: '*', // Разрешить origin любого клиента
+  },
+});
+
+//создаем базу данных
+await createMonitoringDB();
+//читываем значение датчиков через каждые 5 сек и после валидации записываем их в БД
+setInterval(readSensors, READING_PERIOD);
+
+// Устанавливаем соединение WebSocket c клиентом
+io.on('connection', (socket) => {
+  console.log('New client connected:', socket.id);
+
+  const readSensorsInterval = setInterval(async () => {
+    //из базы данных берем последнее значение показателей датчиков
+    const data = await getLastDataDB();
+    if (data) {
+      // Отправляем данные клиентам через WebSocket
+      socket.emit('sensorsData', {
+        tempData: data.temp,
+        humidData: data.humid,
+      });
+    }
+  }, READING_PERIOD);
+
+  //Очищаем интервал при отключении клиента
+  socket.on('disconnect', () => {
+    clearInterval(readSensorsInterval);
+    console.log('Client disconnected:', socket.id);
+  });
+});
+
+httpServer.listen(PORT, () => {
   console.log(`Server running on port ${PORT}.`);
 });

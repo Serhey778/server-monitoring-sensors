@@ -22,11 +22,11 @@ export async function validatedData(temp: number, humid: number) {
       message: 'Data was not validated',
     };
   }
-  await writtenMonitoringDB(temp, humid);
-
-  // Отправляем данные клиентам через WebSocket
-  io.emit('sensorsData', {
-    tempData: temp,
-    humidData: humid,
-  });
+  try {
+    // запись в базу данных если валидация прошла успешна
+    await writtenMonitoringDB(temp, humid);
+    console.log(temp, humid);
+  } catch (error) {
+    console.error('Error written monitoring in bd:', error);
+  }
 }

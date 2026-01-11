@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
-    "target": "ESNext", // Версия ECMAScript
-    "module": "NodeNext", // Используйте NodeNext
-    "outDir": "./dist", // Директория для выходных файлов
-    "rootDir": "./src", // Корневая директория исходного кода
-    "strict": true, // Включает строгий режим
-    "esModuleInterop": true, // Упрощает совместимость с CommonJS
-    "moduleResolution": "NodeNext", // Опция разрешения модулей
+    "target": "ESNext",
+    "module": "NodeNext",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "NodeNext",
     "skipLibCheck": true,
-    "typeRoots": ["./node_modules/@types", "./@types"] // Пропустить проверку типов в библиотеках
+    "typeRoots": ["./node_modules/@types", "src/@types"]
   },
-  "include": ["src/**/*"], // Включение файлов
-  "exclude": ["node_modules"] // Исключение node_modules
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }

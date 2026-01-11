@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 import { validatedData } from './validated.js';
 import { parseValue } from './utils/utils.js';
 
-console.log(ModbusRTU);
 dotenv.config();
 // Функция для опроса датчиков
 export async function readSensors(): Promise<Response | void> {

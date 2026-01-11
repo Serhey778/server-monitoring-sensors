@@ -7,9 +7,12 @@ import {
 } from './database.js';
 
 export const router = express.Router();
+router.get('/', (req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Hello server monitoring-sensors');
+});
 // transfer data in an 1 hour
 router.get('/1hour', (req, res) => getData(req, res, get1HourInDataDB));
-
 // transfer data in an 6 hourы
 router.get('/6hours', (req, res) => getData(req, res, get6HoursInDataDB));
 

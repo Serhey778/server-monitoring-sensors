@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/api/', router);
 const httpServer = http.createServer(app);
-export const io = new SocketIOServer(httpServer, {
+const io = new SocketIOServer(httpServer, {
     cors: {
         origin: '*', // Разрешить origin любого клиента
     },
@@ -44,3 +44,4 @@ io.on('connection', (socket) => {
 httpServer.listen(PORT, () => {
     console.log(`Server running on port ${PORT}.`);
 });
+export default httpServer;

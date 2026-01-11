@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": false,
+    "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
@@ -13,11 +13,16 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "allowImportingTsExtensions": true,
+    "rootDir": "./src",
     "plugins": [
       {
         "name": "express"
       }
-    ]
-  }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
 }

@@ -2,9 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import http from 'http';
 import { Server as SocketIOServer } from 'socket.io';
-import { createMonitoringDB, getLastDataDB } from './database.ts';
-import { readSensors } from './read-sensors.ts';
-import { router } from './routes.ts';
+import { createMonitoringDB, getLastDataDB } from './database.js';
+import { readSensors } from './read-sensors.js';
+import { router } from './routes.js';
 
 const READING_PERIOD = 5000;
 const PORT = 5000;

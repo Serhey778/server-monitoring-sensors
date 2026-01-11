@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { writtenMonitoringDB } from './database.ts';
+import { writtenMonitoringDB } from './database.js';
 
 const DataDBSchema = z.object({
   id: z.string(), // id должен быть строкой

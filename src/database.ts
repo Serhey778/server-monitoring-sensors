@@ -1,6 +1,6 @@
 import postgres from 'postgres';
 import dotenv from 'dotenv';
-import type { DataDB } from './type.ts';
+import type { DataDB } from './type.js';
 
 dotenv.config();
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });

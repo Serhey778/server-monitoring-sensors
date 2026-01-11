@@ -1,29 +1,15 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
+    "target": "ESNext", // Версия ECMAScript
+    "module": "NodeNext", // Используйте NodeNext
+    "outDir": "./dist", // Директория для выходных файлов
+    "rootDir": "./src", // Корневая директория исходного кода
+    "strict": true, // Включает строгий режим
+    "esModuleInterop": true, // Упрощает совместимость с CommonJS
+    "moduleResolution": "NodeNext", // Опция разрешения модулей
     "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
-    "incremental": true,
-    "rootDir": "./src",
-    "allowImportingTsExtensions": true,
-    "plugins": [
-      {
-        "name": "express"
-      }
-    ],
-    "paths": {
-      "@/*": ["./*"]
-    }
+    "typeRoots": ["./node_modules/@types", "./@types"] // Пропустить проверку типов в библиотеках
   },
-  "include": ["**/*.ts", "src/index.js"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*"], // Включение файлов
+  "exclude": ["node_modules"] // Исключение node_modules
 }

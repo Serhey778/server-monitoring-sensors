@@ -4,7 +4,7 @@ import { get1HourInDataDB, get6HoursInDataDB, get24HoursInDataDB, } from './data
 export const router = express.Router();
 router.get('/', (req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('Hello server monitoring-sensors');
+    res.json('Hello server monitoring-sensors');
 });
 // transfer data in an 1 hour
 router.get('/1hour', (req, res) => getData(req, res, get1HourInDataDB));

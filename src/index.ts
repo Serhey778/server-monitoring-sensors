@@ -6,7 +6,7 @@ import { createMonitoringDB, getLastDataDB } from './database.js';
 import { readSensors } from './read-sensors.js';
 import { router } from './routes.js';
 
-const READING_PERIOD = 60000;
+const READING_PERIOD = 5000;
 const PORT = 5000;
 const app = express();
 app.use(cors());

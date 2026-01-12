@@ -40,7 +40,7 @@ io.on('connection', (socket) => {
         console.log('Client disconnected:', socket.id);
     });
 });
-app.use('/api/', router);
+app.use('/api', router);
 httpServer.listen(PORT, () => {
     console.log(`Server running on port ${PORT}.`);
 });

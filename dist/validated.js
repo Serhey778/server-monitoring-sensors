@@ -20,7 +20,6 @@ export async function validatedData(temp, humid) {
     try {
         // запись в базу данных если валидация прошла успешна
         await writtenMonitoringDB(temp, humid);
-        console.log(temp, humid);
     }
     catch (error) {
         console.error('Error written monitoring in bd:', error);

@@ -11,7 +11,6 @@ const PORT = 5000;
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use('/api/', router);
 
 const httpServer = http.createServer(app);
 const io = new SocketIOServer(httpServer, {
@@ -47,7 +46,7 @@ io.on('connection', (socket) => {
     console.log('Client disconnected:', socket.id);
   });
 });
-
+app.use('/api/', router);
 httpServer.listen(PORT, () => {
   console.log(`Server running on port ${PORT}.`);
 });

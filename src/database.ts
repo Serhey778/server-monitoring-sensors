@@ -9,10 +9,6 @@ export async function createMonitoringDB(): Promise<void> {
   try {
     //включаем расширение
     await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
-
-    // Удаляем таблицу в б/д, если существует
-    await sql`DROP TABLE IF EXISTS monitoring`;
-
     //создаем новую таблицу в б/д
     await sql`
       CREATE TABLE IF NOT EXISTS monitoring (

@@ -74,7 +74,7 @@ export async function getLastDataDB(): Promise<DataDB | undefined> {
 export async function get1HourInDataDB(): Promise<DataDB[] | undefined> {
   try {
     const data = await sql<DataDB[]>`
-    SELECT DISTINCT ON (created_at) *
+    SELECT DISTINCT ON (DATE_TRUNC('minute', created_at)) *
     FROM monitoring
     WHERE created_at >= NOW() - INTERVAL '1 hour'
     ORDER BY created_at DESC;
@@ -88,7 +88,7 @@ export async function get1HourInDataDB(): Promise<DataDB[] | undefined> {
 export async function get6HoursInDataDB(): Promise<DataDB[] | undefined> {
   try {
     const data = await sql<DataDB[]>`
-    SELECT DISTINCT ON (created_at) *
+    SELECT DISTINCT ON (DATE_TRUNC('minute', created_at)) *
     FROM monitoring
     WHERE created_at >= NOW() - INTERVAL '6 hours'
     ORDER BY created_at DESC;
@@ -103,7 +103,7 @@ export async function get6HoursInDataDB(): Promise<DataDB[] | undefined> {
 export async function get24HoursInDataDB(): Promise<DataDB[] | undefined> {
   try {
     const data = await sql<DataDB[]>`
-    SELECT DISTINCT ON (created_at) *
+    SELECT DISTINCT ON (DATE_TRUNC('minute', created_at)) *
     FROM monitoring
     WHERE created_at >= NOW() - INTERVAL '24 hours'
     ORDER BY created_at DESC;
@@ -120,7 +120,7 @@ export async function getDateByDataDB(
 ): Promise<DataDB[] | undefined> {
   try {
     const data = await sql<DataDB[]>`
-    SELECT DISTINCT ON (created_at) *
+    SELECT DISTINCT ON (DATE_TRUNC('minute', created_at)) *
     FROM monitoring
     WHERE DATE(created_at) = ${segmentURL}
     ORDER BY created_at DESC;

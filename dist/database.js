@@ -67,7 +67,7 @@ export async function getLastDataDB() {
 export async function get1HourInDataDB() {
     try {
         const data = await sql `
-    SELECT DISTINCT ON (created_at) *
+    SELECT DISTINCT ON (DATE_TRUNC('minute', created_at)) *
     FROM monitoring
     WHERE created_at >= NOW() - INTERVAL '1 hour'
     ORDER BY created_at DESC;
@@ -82,7 +82,7 @@ export async function get1HourInDataDB() {
 export async function get6HoursInDataDB() {
     try {
         const data = await sql `
-    SELECT DISTINCT ON (created_at) *
+    SELECT DISTINCT ON (DATE_TRUNC('minute', created_at)) *
     FROM monitoring
     WHERE created_at >= NOW() - INTERVAL '6 hours'
     ORDER BY created_at DESC;
@@ -97,7 +97,7 @@ export async function get6HoursInDataDB() {
 export async function get24HoursInDataDB() {
     try {
         const data = await sql `
-    SELECT DISTINCT ON (created_at) *
+    SELECT DISTINCT ON (DATE_TRUNC('minute', created_at)) *
     FROM monitoring
     WHERE created_at >= NOW() - INTERVAL '24 hours'
     ORDER BY created_at DESC;
@@ -112,7 +112,7 @@ export async function get24HoursInDataDB() {
 export async function getDateByDataDB(segmentURL) {
     try {
         const data = await sql `
-    SELECT DISTINCT ON (created_at) *
+    SELECT DISTINCT ON (DATE_TRUNC('minute', created_at)) *
     FROM monitoring
     WHERE DATE(created_at) = ${segmentURL}
     ORDER BY created_at DESC;

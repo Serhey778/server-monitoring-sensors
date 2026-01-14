@@ -84,7 +84,7 @@ export async function get6HoursInDataDB() {
         const data = await sql `
     SELECT DISTINCT ON (DATE_TRUNC('minute', created_at)) *
     FROM monitoring
-    HERE created_at >= NOW() - INTERVAL '6 hours'
+    WHERE created_at >= NOW() - INTERVAL '6 hours'
     ORDER BY DATE_TRUNC('minute', created_at), created_at DESC;
     `;
         return data;

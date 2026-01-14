@@ -69,7 +69,8 @@ export async function get1HourInDataDB() {
         const data = await sql `
     SELECT * 
     FROM monitoring
-    WHERE created_at >= NOW() - INTERVAL '1 hour';
+    WHERE created_at >= NOW() - INTERVAL '1 hour'
+    ORDER BY created_at DESC;
     `;
         return data;
     }
@@ -83,7 +84,8 @@ export async function get6HoursInDataDB() {
         const data = await sql `
     SELECT *
     FROM monitoring
-    WHERE created_at >= NOW() - INTERVAL '6 hours';
+    WHERE created_at >= NOW() - INTERVAL '6 hours'
+    ORDER BY created_at DESC;
     `;
         return data;
     }
@@ -97,7 +99,8 @@ export async function get24HoursInDataDB() {
         const data = await sql `
     SELECT *
     FROM monitoring
-    WHERE created_at >= NOW() - INTERVAL '24 hours';
+    WHERE created_at >= NOW() - INTERVAL '24 hours'
+    ORDER BY created_at DESC;
     `;
         return data;
     }
@@ -111,7 +114,8 @@ export async function getDateByDataDB(segmentURL) {
         const data = await sql `
      SELECT *
      FROM monitoring
-     WHERE DATE(created_at) = ${segmentURL};
+     WHERE DATE(created_at) = ${segmentURL}
+     ORDER BY created_at DESC;
     `;
         return data;
     }
